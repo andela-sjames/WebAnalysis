@@ -96,7 +96,6 @@ class DeepWebAnalyzer:
         ]
 
     def _get_domain(self, url):
-
         hostname = parse.urlparse(url).hostname
 
         if len(re.findall(r'[0-9]+(?:\.[0-9]+){3}', hostname)) > 0:
