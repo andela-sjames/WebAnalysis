@@ -5,38 +5,38 @@ from dataclasses import dataclass
 from urllib import request, error, parse
 
 @dataclass
-class WebAnalyzer:
+class DeepWebAnalyzer:
     root: str
     max_depth: int
 
     def start(self):
-        if type(self.max_depth) == str:
+        if type(self.max_depth) is str:
             self.max_depth = int(self.max_depth)
         print("*** Fetching external links for " + self.root)
         page1, page_title = self.get_page(self.root)
         if page_title is None:
             return "Forbidden"
         page_title = re.sub("[!@#$']", '', page_title)
-        external = self.get_external(page1, self.root)
+        external_links = self.get_external(page1, self.root)
         crawled = {}
         crawldepth = {}
-        crawled[page_title]={'parent':'root'}
-        num_of = len(external)
+        crawled[page_title] = {'parent':'root'}
+        num_of = len(external_links)
         print(f" *** {num_of} external links found on root")
-        for check in external:
-            if check != "":
-                domain = self.get_domain(check)
+        for ext_link in external_links:
+            if ext_link != "":
+                domain = self.get_domain(ext_link)
             else:
                 continue
 
             filter_domain = [domain]
             #set domain and depth
-            tocrawl = [[check,1]]
+            tocrawl = [[ext_link, 1]]
 
             while tocrawl: 
-                crawl_ele = tocrawl.pop()
-                link = crawl_ele[0]
-                depth = crawl_ele[1]
+                crawl_element = tocrawl.pop()
+                link = crawl_element[0]
+                depth = crawl_element[1]
                 
                 if link not in crawled.keys():
                     if link is not None and link[:1] != '#' and link[:1] != '/' and \
@@ -44,27 +44,27 @@ class WebAnalyzer:
                         print("*** Fetching data from " + link)
                     content, title = self.get_page(link)
 
-                    if title == type(str):
+                    if title is type(str):
                         title = re.sub("[!@#$']", '', title)
                     
-                    if content == None:
+                    if content is None:
                         continue
                     else:
-                        crawldepth[depth]=title
+                        crawldepth[depth] = title
                     host = self.get_domain(link)
                     
-                    if depth < self.max_depth and host in filter_domain :
+                    if depth < self.max_depth and host in filter_domain:
 
                         outlinks = self.get_all_links(content, link)
                         num_of_outlinks = len(outlinks)
                         print(f" *** {num_of_outlinks} link(s) found on {link}")
                     
-                        self.add_to_tocrawl(crawled.keys(),tocrawl, outlinks, depth+1)
+                        self.add_to_tocrawl(crawled.keys(), tocrawl, outlinks, depth + 1)
                     
                     if depth == 1:
-                        crawled[title]={'parent':page_title}
+                        crawled[title] = {'parent':page_title}
                     else:
-                        crawled[title]={'parent':crawldepth[depth-1]}
+                        crawled[title] = {'parent':crawldepth[depth - 1]}
 
         return crawled
     
@@ -123,7 +123,5 @@ class WebAnalyzer:
         return [l.get('href') for l in page.findAll('a') ]
 
 
-# print(analyse_web("https://www.cnn.com", 1))
-
-wa = WebAnalyzer("https://www.cnn.com", 1)
-print(wa.start())
+dwa = DeepWebAnalyzer("https://www.cnn.com", 1)
+print(dwa.start())
