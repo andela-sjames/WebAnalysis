@@ -14,11 +14,11 @@ class DeepWebAnalyzer:
         if type(self.max_depth) is str:
             self.max_depth = int(self.max_depth)
         print("*** Fetching external links for " + self.root)
-        page1, page_title = self.get_page(self.root)
+        page1, page_title = self._get_page(self.root)
         if page_title is None:
             return "Forbidden"
         page_title = re.sub("[!@#$']", '', page_title)
-        external_links = self.get_external(page1, self.root)
+        external_links = self._get_external(page1, self.root)
         crawled = {}
         crawldepth = {}
         crawled[page_title] = {'parent': 'root'}
@@ -26,7 +26,7 @@ class DeepWebAnalyzer:
         print(f" *** {num_of} external links found on root")
         for ext_link in external_links:
             if ext_link != "":
-                domain = self.get_domain(ext_link)
+                domain = self._get_domain(ext_link)
             else:
                 continue
 
@@ -43,7 +43,7 @@ class DeepWebAnalyzer:
                        link[:1] != '/' and link[:1] != '?' and \
                        link[:2] != '//':
                         print("*** Fetching data from " + link)
-                    content, title = self.get_page(link)
+                    content, title = self._get_page(link)
 
                     if title is type(str):
                         title = re.sub("[!@#$']", '', title)
@@ -52,16 +52,16 @@ class DeepWebAnalyzer:
                         continue
                     else:
                         crawldepth[depth] = title
-                    host = self.get_domain(link)
+                    host = self._get_domain(link)
 
                     if depth < self.max_depth and host in filter_domain:
 
-                        outlinks = self.get_all_links(content, link)
+                        outlinks = self._get_all_links(content, link)
                         num_of_outlinks = len(outlinks)
                         print(f"*** {num_of_outlinks} link(s) found on {link}")
 
-                        self.add_to_tocrawl(
-                            crawled.keys(), tocrawl, 
+                        self._add_to_tocrawl(
+                            crawled.keys(), tocrawl,
                             outlinks, depth + 1
                         )
 
@@ -71,13 +71,13 @@ class DeepWebAnalyzer:
                         crawled[title] = {'parent': crawldepth[depth - 1]}
 
         return crawled
-    
-    def add_to_tocrawl(self, crawled, tocrawl, newlinks, depth):
+
+    def _add_to_tocrawl(self, crawled, tocrawl, newlinks, depth):
         for link in newlinks:
             if link not in tocrawl and link not in crawled:
-                tocrawl.append([link,depth])
-    
-    def is_external(self, root, host):
+                tocrawl.append([link, depth])
+
+    def _is_external(self, root, host):
         if len(host) > 0:
             if host[0] == '/' or host[0] == '#' or host[0] == '?':
                 return False
@@ -88,11 +88,15 @@ class DeepWebAnalyzer:
             return False
         return host is not hostname and host.find(hostname) == -1
 
-    def get_external(self, soup, url):
-        return [l.get('href') for l in soup.findAll('a') if self.is_external(url, l.get('href'))]
+    def _get_external(self, soup, url):
+        return [
+            l.get('href')
+            for l in soup.findAll('a')
+            if self._is_external(url, l.get('href'))
+        ]
 
-    def get_domain(self, url):
-        
+    def _get_domain(self, url):
+
         hostname = parse.urlparse(url).hostname
 
         if len(re.findall(r'[0-9]+(?:\.[0-9]+){3}', hostname)) > 0:
@@ -104,7 +108,7 @@ class DeepWebAnalyzer:
         else:
             return hostname.split('.')[1]
 
-    def get_page(self, url):
+    def _get_page(self, url):
         try:
             response = request.urlopen(url)
             soup = BeautifulSoup(response, features="html.parser")
@@ -123,7 +127,7 @@ class DeepWebAnalyzer:
             print(e)
             return None, None
 
-    def get_all_links(self, page, parent):
+    def _get_all_links(self, page, parent):
         return [l.get('href') for l in page.findAll('a')]
 
 
