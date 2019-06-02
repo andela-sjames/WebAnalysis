@@ -1,6 +1,15 @@
-from urllib import request, error, parse
-from bs4 import BeautifulSoup
 import re
+
+from bs4 import BeautifulSoup
+from dataclasses import dataclass
+from urllib import request, error, parse
+
+@dataclass
+class WebAnalyzer:
+    root: str
+    max_depth: int
+
+
 
 
 def analyse_web(root, max_depth):
@@ -123,4 +132,4 @@ def add_to_tocrawl(crawled, tocrawl, newlinks, depth):
             tocrawl.append([link,depth])
 
 
-# print(analyse_web("https://www.cnn.com", 1))
+print(analyse_web("https://www.cnn.com", 1))
