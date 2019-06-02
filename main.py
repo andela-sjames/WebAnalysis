@@ -1,5 +1,4 @@
 import re
-
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
 from urllib import request, error, parse
