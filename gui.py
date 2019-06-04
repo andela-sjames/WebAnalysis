@@ -4,7 +4,7 @@ from importlib import reload
 
 import matplotlib.pyplot as plt
 import networkx as nx
-import tkinter
+import tkinter as tk
 
 from main import DeepWebAnalyzer
 
@@ -19,53 +19,53 @@ class RenderGui:
 
 def display_gui(web='',dept=1):
     global app, link, depthname
-    app =  tkinter.Tk()
+    app =  tk.Tk()
     app.title("LINK ANALYSER")
     app.geometry('450x300+200+200')
 
-    menubar = tkinter.Menu(app)
-    filemenu = tkinter.Menu(menubar, tearoff=0)
+    menubar = tk.Menu(app)
+    filemenu = tk.Menu(menubar, tearoff=0)
     filemenu.add_command(label="Quit", command=app.quit)
     menubar.add_cascade(label="File", menu=filemenu)
 
-    helpmenu = tkinter.Menu(menubar, tearoff=0)
+    helpmenu = tk.Menu(menubar, tearoff=0)
     helpmenu.add_command(label="About Us", command=aboutProject)
     menubar.add_cascade(label="Help", menu=helpmenu)
 
     app.config(menu=menubar)
 
-    headertext2 = tkinter.StringVar()
+    headertext2 = tk.StringVar()
     headertext2.set("")
-    label10 = tkinter.Label(app,textvariable=headertext2,height=1)
+    label10 = tk.Label(app, textvariable=headertext2, height=1)
     label10.pack()
 
-    headertext = tkinter.StringVar()
+    headertext = tk.StringVar()
     headertext.set("")
-    label0 = tkinter.Label(app,textvariable=headertext,height=4)
+    label0 = tk.Label(app, textvariable=headertext, height=4)
     label0.pack()
 
-    labeltext = tkinter.StringVar()
+    labeltext = tk.StringVar()
     labeltext.set("Website url")
-    label1 = tkinter.Label(app,textvariable=labeltext,height=1)
+    label1 = tk.Label(app, textvariable=labeltext, height=1)
     label1.pack()
 
-    url = tkinter.StringVar(None)
+    url = tk.StringVar(None)
     url.set(web)
-    link = tkinter.Entry(app,textvariable=url,)
+    link = tk.Entry(app, textvariable=url,)
     link.pack()
 
-    labeltext = tkinter.StringVar()
+    labeltext = tk.StringVar()
     labeltext.set("Depth")
-    label1 = tkinter.Label(app,textvariable=labeltext,height=1)
+    label1 = tk.Label(app, textvariable=labeltext, height=1)
     label1.pack()
 
-    deptvalue = tkinter.IntVar(None)
+    deptvalue = tk.IntVar(None)
     deptvalue.set(dept)
-    depthname = tkinter.Entry(app,textvariable=deptvalue,text=dept)
+    depthname = tk.Entry(app, textvariable=deptvalue, text=dept)
     depthname.pack()
 
-    button1 = tkinter.Button(app,text="Submit",width=20,command=changeLabel)
-    button1.pack(side='bottom' ,padx=15,pady=15)
+    button1 = tk.Button(app, text="Submit", width=20, command=changeLabel)
+    button1.pack(side='bottom', padx=15, pady=15)
 
     app.mainloop()
 
@@ -78,7 +78,7 @@ def do_get(site, num):
     crawl = DeepWebAnalyzer(site, num).start()
     if crawl == "Forbidden":
         app_mssg = f"403:Forbidden, not allowed to crawl {site}"
-        tkinter.messagebox.showinfo(app_mssg)
+        tk.messagebox.showinfo(app_mssg)
         return
 
     for child in crawl:
@@ -103,10 +103,10 @@ def changeLabel():
     num = depthname.get()
     
     if site[:7] != "http://" and site[:8] != "https://":
-        tkinter.messagebox.showinfo("Error","The url is invalid")
+        tk.messagebox.showinfo("Error","The url is invalid")
         return
     elif int(num) < 1:
-        tkinter.messagebox.showinfo("Error", "The depth should be greater than or equal to 1")
+        tk.messagebox.showinfo("Error", "The depth should be greater than or equal to 1")
         return
 
     do_get(site, num)
