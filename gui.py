@@ -17,7 +17,7 @@ depthname = None
 class RenderGui:
     pass
 
-def display_gui(web='', dept=1):
+def display_gui(web='', depth=1):
     global app, link, depthname
     app =  tk.Tk()
     app.title("LINK ANALYSER")
@@ -59,14 +59,16 @@ def display_gui(web='', dept=1):
     label1 = tk.Label(app, textvariable=labeltext, height=1)
     label1.pack()
 
-    deptvalue = tk.IntVar(None)
-    deptvalue.set(dept)
-    depthname = tk.Entry(app, textvariable=deptvalue, text=dept)
+    depthvalue = tk.IntVar(None)
+    depthvalue.set(depth)
+    depthname = tk.Entry(app, textvariable=depthvalue, text=depth)
     depthname.pack()
 
-    submit_btn = tk.Button(app, text="Submit", width=20, command=change_label)
+    submit_btn = tk.Button(app, text="Submit", width=20, command=start_gui)
+    close_btn = tk.Button(app, text="Close", width=20, command=close_gui)
     
-    submit_btn.pack(side='bottom', padx=15, pady=15)
+    submit_btn.pack(side=tk.LEFT, padx=15, pady=15)
+    close_btn.pack(side=tk.RIGHT, padx=15, pady=15)
 
     app.mainloop()
 
@@ -98,19 +100,22 @@ def about_project():
     print("A simple web analysis project")
     
 
-def change_label():
+def start_gui():
     global app, link, depthname
     site = link.get()
     num = depthname.get()
     
     if site[:7] != "http://" and site[:8] != "https://":
-        tk.messagebox.showinfo("Error","The url is invalid")
+        tk.messagebox.showinfo("Error", "The url is invalid")
         return
     elif int(num) < 1:
         tk.messagebox.showinfo("Error", "The depth should be greater than or equal to 1")
         return
-
     do_get(site, num)
+
+
+def close_gui():
+    global app
     app.destroy()
 
 display_gui()
