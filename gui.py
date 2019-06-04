@@ -64,8 +64,9 @@ def display_gui(web='', dept=1):
     depthname = tk.Entry(app, textvariable=deptvalue, text=dept)
     depthname.pack()
 
-    button1 = tk.Button(app, text="Submit", width=20, command=change_label)
-    button1.pack(side='bottom', padx=15, pady=15)
+    submit_btn = tk.Button(app, text="Submit", width=20, command=change_label)
+    
+    submit_btn.pack(side='bottom', padx=15, pady=15)
 
     app.mainloop()
 
