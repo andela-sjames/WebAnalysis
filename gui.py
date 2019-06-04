@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import Menu
 import tkinter.messagebox
-from main import *
+from main import DeepWebAnalyzer
 import networkx as nx
 import matplotlib.pyplot as plt
 import sys
@@ -72,7 +72,7 @@ def do_get(site, num):
     (_ROOT, _DEPTH, _BREADTH) = range(3)
     print(site, num)
     G=nx.Graph()
-    crawl = analyse_web(site, num)
+    crawl = DeepWebAnalyzer(site, num)
     if crawl == "Forbidden":
         app_mssg = f"403:Forbidden, not allowed to crawl {site}"
         tkinter.messagebox.showinfo(app_mssg)
