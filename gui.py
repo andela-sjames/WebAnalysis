@@ -1,18 +1,21 @@
-import tkinter
-from tkinter import Menu
-import tkinter.messagebox
-from main import DeepWebAnalyzer
-import networkx as nx
-import matplotlib.pyplot as plt
 import sys
-from time import clock
-
+from time import process_time
 from importlib import reload
+
+import matplotlib.pyplot as plt
+import networkx as nx
+import tkinter
+
+from main import DeepWebAnalyzer
 
 
 app = None
 link = None
 depthname = None
+
+
+class RenderGui:
+    pass
 
 def display_gui(web='',dept=1):
     global app, link, depthname
@@ -20,12 +23,12 @@ def display_gui(web='',dept=1):
     app.title("LINK ANALYSER")
     app.geometry('450x300+200+200')
 
-    menubar = Menu(app)
-    filemenu = Menu(menubar, tearoff=0)
+    menubar = tkinter.Menu(app)
+    filemenu = tkinter.Menu(menubar, tearoff=0)
     filemenu.add_command(label="Quit", command=app.quit)
     menubar.add_cascade(label="File", menu=filemenu)
 
-    helpmenu = Menu(menubar, tearoff=0)
+    helpmenu = tkinter.Menu(menubar, tearoff=0)
     helpmenu.add_command(label="About Us", command=aboutProject)
     menubar.add_cascade(label="Help", menu=helpmenu)
 
@@ -68,11 +71,11 @@ def display_gui(web='',dept=1):
 
 
 def do_get(site, num):
-    start = clock()
+    start = process_time()
     (_ROOT, _DEPTH, _BREADTH) = range(3)
     print(site, num)
     G=nx.Graph()
-    crawl = DeepWebAnalyzer(site, num)
+    crawl = DeepWebAnalyzer(site, num).start()
     if crawl == "Forbidden":
         app_mssg = f"403:Forbidden, not allowed to crawl {site}"
         tkinter.messagebox.showinfo(app_mssg)
@@ -83,7 +86,7 @@ def do_get(site, num):
         if crawl[child]['parent'] != 'root':
             G.add_edge(crawl[child]['parent'], child)
 
-    nx.draw(G,node_size=20,alpha=0.5,node_color="blue", with_labels=True)
+    nx.draw(G, node_size=20, alpha=0.5, node_color="blue", with_labels=True)
     #fig, ax = plt.subplots()
     plt.savefig("node_colormap.png") # save as png
     # print("Total time: " + clock() - start)
@@ -99,10 +102,10 @@ def changeLabel():
     site = link.get()
     num = depthname.get()
     
-    if site[:7]!= "http://" and site[:8]!= "https://":
+    if site[:7] != "http://" and site[:8] != "https://":
         tkinter.messagebox.showinfo("Error","The url is invalid")
         return
-    elif int(num)<1:
+    elif int(num) < 1:
         tkinter.messagebox.showinfo("Error", "The depth should be greater than or equal to 1")
         return
 

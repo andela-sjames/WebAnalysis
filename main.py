@@ -129,5 +129,5 @@ class DeepWebAnalyzer:
         return [l.get('href') for l in page.findAll('a')]
 
 
-dwa = DeepWebAnalyzer("https://www.cnn.com", 1)
-print(dwa.start())
+# dwa = DeepWebAnalyzer("https://www.cnn.com", 1)
+# print(dwa.start())
