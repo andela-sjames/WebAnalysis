@@ -17,7 +17,7 @@ depthname = None
 class RenderGui:
     pass
 
-def display_gui(web='',dept=1):
+def display_gui(web='', dept=1):
     global app, link, depthname
     app =  tk.Tk()
     app.title("LINK ANALYSER")
@@ -29,7 +29,7 @@ def display_gui(web='',dept=1):
     menubar.add_cascade(label="File", menu=filemenu)
 
     helpmenu = tk.Menu(menubar, tearoff=0)
-    helpmenu.add_command(label="About Us", command=aboutProject)
+    helpmenu.add_command(label="About Us", command=about_project)
     menubar.add_cascade(label="Help", menu=helpmenu)
 
     app.config(menu=menubar)
@@ -64,7 +64,7 @@ def display_gui(web='',dept=1):
     depthname = tk.Entry(app, textvariable=deptvalue, text=dept)
     depthname.pack()
 
-    button1 = tk.Button(app, text="Submit", width=20, command=changeLabel)
+    button1 = tk.Button(app, text="Submit", width=20, command=change_label)
     button1.pack(side='bottom', padx=15, pady=15)
 
     app.mainloop()
@@ -93,11 +93,11 @@ def do_get(site, num):
     plt.show()
 
 
-def aboutProject():
+def about_project():
     print("A simple web analysis project")
     
 
-def changeLabel():
+def change_label():
     global app, link, depthname
     site = link.get()
     num = depthname.get()
