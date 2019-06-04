@@ -17,9 +17,10 @@ depthname = None
 class RenderGui:
     pass
 
+
 def display_gui(web='', depth=1):
     global app, link, depthname
-    app =  tk.Tk()
+    app = tk.Tk()
     app.title("LINK ANALYSER")
     app.geometry('450x300+200+200')
 
@@ -66,7 +67,7 @@ def display_gui(web='', depth=1):
 
     submit_btn = tk.Button(app, text="Submit", width=20, command=start_gui)
     close_btn = tk.Button(app, text="Close", width=20, command=close_gui)
-    
+
     submit_btn.pack(side=tk.LEFT, padx=15, pady=15)
     close_btn.pack(side=tk.RIGHT, padx=15, pady=15)
 
@@ -77,7 +78,7 @@ def do_get(site, num):
     start = process_time()
     (_ROOT, _DEPTH, _BREADTH) = range(3)
     print(site, num)
-    G=nx.Graph()
+    G = nx.Graph()
     crawl = DeepWebAnalyzer(site, num).start()
     if crawl == "Forbidden":
         app_mssg = f"403:Forbidden, not allowed to crawl {site}"
@@ -90,26 +91,29 @@ def do_get(site, num):
             G.add_edge(crawl[child]['parent'], child)
 
     nx.draw(G, node_size=20, alpha=0.5, node_color="blue", with_labels=True)
-    #fig, ax = plt.subplots()
-    plt.savefig("node_colormap.png") # save as png
+    # fig, ax = plt.subplots()
+    plt.savefig("node_colormap.png")  # save as png
     # print("Total time: " + clock() - start)
     plt.show()
 
 
 def about_project():
     print("A simple web analysis project")
-    
+
 
 def start_gui():
     global app, link, depthname
     site = link.get()
     num = depthname.get()
-    
+
     if site[:7] != "http://" and site[:8] != "https://":
         tk.messagebox.showinfo("Error", "The url is invalid")
         return
     elif int(num) < 1:
-        tk.messagebox.showinfo("Error", "The depth should be greater than or equal to 1")
+        tk.messagebox.showinfo(
+            "Error",
+            "The depth should be greater than or equal to 1"
+        )
         return
     do_get(site, num)
 
@@ -117,5 +121,6 @@ def start_gui():
 def close_gui():
     global app
     app.destroy()
+
 
 display_gui()
