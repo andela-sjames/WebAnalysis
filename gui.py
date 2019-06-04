@@ -93,7 +93,8 @@ def do_get(site, num):
     nx.draw(G, node_size=20, alpha=0.5, node_color="blue", with_labels=True)
     # fig, ax = plt.subplots()
     plt.savefig("node_colormap.png")  # save as png
-    # print("Total time: " + clock() - start)
+    time_diff = process_time() - start
+    print(f"Total time: {time_diff}")
     plt.show()
 
 
