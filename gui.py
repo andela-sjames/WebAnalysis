@@ -2,7 +2,6 @@
 
 import sys
 from time import process_time
-from importlib import reload
 
 import matplotlib.pyplot as plt
 import networkx as nx
