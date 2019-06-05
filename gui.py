@@ -1,3 +1,5 @@
+"""Gui script defined to interact with console script."""
+
 import sys
 from time import process_time
 from importlib import reload
