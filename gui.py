@@ -22,7 +22,7 @@ class RenderGui:
 def display_gui(web='', depth=1):
     global app, link, depth_name
     app = tk.Tk()
-    app.title("LINK ANALYSER")
+    app.title("DEEP WEB LINK ANALYSER")
     app.geometry('450x300+200+200')
 
     menubar = tk.Menu(app)
