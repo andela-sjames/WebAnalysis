@@ -1,3 +1,5 @@
+"""Console script used to carry out deep web analysis."""
+
 import re
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
