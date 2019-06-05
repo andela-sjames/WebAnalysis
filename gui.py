@@ -12,7 +12,7 @@ from main import DeepWebAnalyzer
 
 app = None
 link = None
-depthname = None
+depth_name = None
 
 
 class RenderGui:
@@ -20,7 +20,7 @@ class RenderGui:
 
 
 def display_gui(web='', depth=1):
-    global app, link, depthname
+    global app, link, depth_name
     app = tk.Tk()
     app.title("LINK ANALYSER")
     app.geometry('450x300+200+200')
@@ -63,8 +63,8 @@ def display_gui(web='', depth=1):
 
     depthvalue = tk.IntVar(None)
     depthvalue.set(depth)
-    depthname = tk.Entry(app, textvariable=depthvalue, text=depth)
-    depthname.pack()
+    depth_name = tk.Entry(app, textvariable=depthvalue, text=depth)
+    depth_name.pack()
 
     submit_btn = tk.Button(app, text="Submit", width=20, command=start_gui)
     close_btn = tk.Button(app, text="Close", width=20, command=close_gui)
@@ -101,9 +101,9 @@ def about_project():
     print("A simple web analysis project")
 
 def start_gui():
-    global app, link, depthname
+    global app, link, depth_name
     site = link.get()
-    num = depthname.get()
+    num = depth_name.get()
 
     if site[:7] != "http://" and site[:8] != "https://":
         tk.messagebox.showinfo("Error", "The url is invalid")
