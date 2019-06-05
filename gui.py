@@ -74,7 +74,6 @@ def display_gui(web='', depth=1):
 
     app.mainloop()
 
-
 def do_get(site, num):
     start = process_time()
     (_ROOT, _DEPTH, _BREADTH) = range(3)
@@ -98,10 +97,8 @@ def do_get(site, num):
     print(f"Total time: {time_diff}")
     plt.show()
 
-
 def about_project():
     print("A simple web analysis project")
-
 
 def start_gui():
     global app, link, depthname
@@ -119,10 +116,8 @@ def start_gui():
         return
     do_get(site, num)
 
-
 def close_gui():
     global app
     app.destroy()
-
 
 display_gui()
