@@ -1,10 +1,24 @@
-FROM python:3.7.3-alpine
+FROM python:3.7.2-alpine3.8
 
-WORKDIR /webanalysis
+ENV PYTHONUNBUFFERED 1
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apk add --no-cache lapack libstdc++
 
-COPY . .
+RUN apk add --no-cache --virtual build-dependencies \
+    g++ \
+    gcc \
+    gfortran \
+    musl-dev \
+    lapack-dev \
+    freetype-dev \
+    libpng-dev \
+    openblas-dev \
+    && ln -s /usr/include/locale.h /usr/include/xlocale.h \
+    && pip install --no-cache-dir -r requirements.txt \
+    && apk del build-dependencies
+
+# load project files and set work directory
+ADD . /app/
+WORKDIR /app
 
 CMD [ "python", "gui.py" ]
