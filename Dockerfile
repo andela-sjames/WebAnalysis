@@ -6,7 +6,9 @@ RUN apk add --no-cache \
     freetype-dev \
     lapack \
     libpng-dev \
-    libstdc++
+    libstdc++ \
+    tcl \
+    tk
 
 ADD requirements.txt .
 RUN apk add --no-cache --virtual build-dependencies \
@@ -22,5 +24,8 @@ RUN apk add --no-cache --virtual build-dependencies \
 # load project files and set work directory
 ADD . /app/
 WORKDIR /app
+
+RUN addgroup -S docker && adduser -S docker -D docker
+USER docker
 
 CMD [ "python", "gui.py" ]

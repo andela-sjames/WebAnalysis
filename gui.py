@@ -3,6 +3,8 @@
 import sys
 from time import process_time
 
+import matplotlib
+
 import matplotlib.pyplot as plt
 import networkx as nx
 import tkinter as tk
