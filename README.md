@@ -12,7 +12,7 @@ Deep Web Analysis/Ranking
 ### Statement
 Mini project to create a command line/GUI tool to scrape, analyse and plot the relationship between the link and any other link that might be visible from that address that are not internal links up to and including the depth specified. 
 
-Eg: Given the url http://www.cnn.com and a depth n, it should find all links that are not in the andela.com domain and visit those links postorder up to a depth equal to n.
+Eg: Given the url http://www.cnn.com and a depth n, it should find all links that are not in the given domain and visit those links postorder up to a depth equal to n.
 
 
 ### Input
