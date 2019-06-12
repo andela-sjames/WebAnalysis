@@ -104,5 +104,4 @@ venv.bak/
 .mypy_cache/
 
 challenge.txt
-*.png
 code.txt
