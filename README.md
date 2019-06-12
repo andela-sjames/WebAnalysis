@@ -4,7 +4,7 @@ Deep Web Analysis/Ranking
 
 **Project uses python 3.7**
 
-![Gui_desktop_view](gui.png)
+![Gui_desktop_view](gui_url.png)
 
 ![Graph_view](graph.png)
 
