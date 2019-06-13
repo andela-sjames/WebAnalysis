@@ -129,7 +129,3 @@ class DeepWebAnalyzer:
 
     def _get_all_links(self, page, parent):
         return [l.get('href') for l in page.findAll('a')]
-
-
-# dwa = DeepWebAnalyzer("https://www.cnn.com", 1)
-# print(dwa.start())
