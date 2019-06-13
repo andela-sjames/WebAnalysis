@@ -17,6 +17,7 @@ app = None
 link = None
 depth_name = None
 
+
 @dataclass(init=False)
 class RenderGui:
 
@@ -67,8 +68,15 @@ class RenderGui:
         depth_name = tk.Entry(app, textvariable=depthvalue, text=depth)
         depth_name.pack()
 
-        submit_btn = tk.Button(app, text="Submit", width=20, command=self._start_gui)
-        close_btn = tk.Button(app, text="Close", width=20, command=self._close_gui)
+        submit_btn = tk.Button(
+            app, text="Submit",
+            width=20, command=self._start_gui
+        )
+
+        close_btn = tk.Button(
+            app, text="Close",
+            width=20, command=self._close_gui
+        )
 
         submit_btn.pack(side=tk.LEFT, padx=15, pady=15)
         close_btn.pack(side=tk.RIGHT, padx=15, pady=15)
@@ -91,7 +99,11 @@ class RenderGui:
             if crawl[child]['parent'] != 'root':
                 G.add_edge(crawl[child]['parent'], child)
 
-        nx.draw(G, node_size=20, alpha=0.5, node_color="blue", with_labels=True)
+        nx.draw(
+            G, node_size=20,
+            alpha=0.5, node_color="blue",
+            with_labels=True
+        )
         # fig, ax = plt.subplots()
         plt.savefig("node_colormap.png")  # save as png
         time_diff = process_time() - start
@@ -120,6 +132,7 @@ class RenderGui:
     def _close_gui(self):
         global app
         app.destroy()
+
 
 rg = RenderGui()
 rg.display()
